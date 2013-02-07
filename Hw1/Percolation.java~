@@ -1,13 +1,18 @@
-public class Percolation extends WeightedQuickUnionUF
+public class Percolation
 {
   private boolean[][] sites;
   private int grid;
-
+  private int beginNode;
+  private int endNode;
+  private WeightedQuickUnionUF QU;
+  
   public Percolation(int N)
   {
-    super(N*N+2); //+2 for the top and bottom node which we will store as the last two nodes
+    QU = new WeightedQuickUnionUF(N*N+2); //+2 for the top and bottom node which we will store as the last two nodes
     sites = new boolean[N][N];// create N-by-N grid, with all sites blocked
     grid = N;
+    beginNode = N*N;
+    endNode = N*N+1;
   }
   public void open(int i, int j)
   {
@@ -15,30 +20,30 @@ public class Percolation extends WeightedQuickUnionUF
     if (sites[i][j] == false){
       sites[i][j] = true;
     }
-    int index = i + grid*j;
+    int index = indexCalc(i,j);
     //Connect the site with surrounding nodes
     //left:
     if (i != 0){
-      union(index, index-1);
+      QU.union(index, index-1);
     }
     //right:
     if (i != grid-1) {
-      union(index, index+1);
+      QU.union(index, index+1);
     }
     //top:
     if (j != 0){
-      union (index, i+grid*(j-1));
+      QU.union (index, i+grid*(j-1));
     }
     else{
-      union (index, grid*grid); //connect with top node which we will just have as N^2
+      QU.union (index, beginNode); //connect with top node which we will just have as N^2
     }
     //bottom:
     
     if (j != grid-1){
-      union (index, i+grid*(j+1));
+      QU.union (index, i+grid*(j+1));
     }
     else{
-      union (index, grid*grid+1); //connect with the end node which is the N^2+1 node
+      QU.union (index, endNode); //connect with the end node which is the N^2+1 node
     }
   }
   public boolean isOpen(int i, int j)
@@ -49,15 +54,17 @@ public class Percolation extends WeightedQuickUnionUF
   public boolean isFull(int i, int j)
   {
   // is site (row i, column j) full?
-    return true;
+    return QU.connected(indexCalc(i,j), beginNode);
   }
   public boolean percolates()
   {
-  // does the system percolate?
-    return true;
+    return QU.connected(beginNode, endNode);// does the system percolate?
   }
-
-  
+  private int indexCalc(int i, int j){
+    return i + grid*j;
+  }
+ 
+/* 
   public static void main(String[] args) {
     int grid_size = 5;
     Percolation perc = new Percolation(grid_size);
@@ -70,7 +77,7 @@ public class Percolation extends WeightedQuickUnionUF
 
 //  let's test if the openning of a site works. 
     perc.open(0,0);
-    System.out.println(perc.connected(5,grid_size*grid_size));
-    
+    System.out.println(perc.isFull(0,1));
   }
+  */
 }
