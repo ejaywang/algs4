@@ -1,0 +1,76 @@
+public class Percolation extends WeightedQuickUnionUF
+{
+  private boolean[][] sites;
+  private int grid;
+
+  public Percolation(int N)
+  {
+    super(N*N+2); //+2 for the top and bottom node which we will store as the last two nodes
+    sites = new boolean[N][N];// create N-by-N grid, with all sites blocked
+    grid = N;
+  }
+  public void open(int i, int j)
+  {
+  // open site (row i, column j) if it is not already
+    if (sites[i][j] == false){
+      sites[i][j] = true;
+    }
+    int index = i + grid*j;
+    //Connect the site with surrounding nodes
+    //left:
+    if (i != 0){
+      union(index, index-1);
+    }
+    //right:
+    if (i != grid-1) {
+      union(index, index+1);
+    }
+    //top:
+    if (j != 0){
+      union (index, i+grid*(j-1));
+    }
+    else{
+      union (index, grid*grid); //connect with top node which we will just have as N^2
+    }
+    //bottom:
+    
+    if (j != grid-1){
+      union (index, i+grid*(j+1));
+    }
+    else{
+      union (index, grid*grid+1); //connect with the end node which is the N^2+1 node
+    }
+  }
+  public boolean isOpen(int i, int j)
+  {
+  // is site (row i, column j) open?
+    return sites[i][j];
+  }
+  public boolean isFull(int i, int j)
+  {
+  // is site (row i, column j) full?
+    return true;
+  }
+  public boolean percolates()
+  {
+  // does the system percolate?
+    return true;
+  }
+
+  
+  public static void main(String[] args) {
+    int grid_size = 5;
+    Percolation perc = new Percolation(grid_size);
+    //initialize the grid to something
+//    for(int i=0;i<grid_size;i++){
+//      for (int j=0;j<grid_size;j++){
+//        System.out.println(perc.isOpen(i,j));
+//      }
+//    }
+
+//  let's test if the openning of a site works. 
+    perc.open(0,0);
+    System.out.println(perc.connected(5,grid_size*grid_size));
+    
+  }
+}
