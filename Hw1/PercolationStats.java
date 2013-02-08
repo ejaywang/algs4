@@ -5,37 +5,32 @@ public class PercolationStats {
   //sites that needed to be opened for percolation. 
   private int total_sites, trial_size, count;
   private double[] iterations;
-  private int[] site_to_open;
   
   
-  public PercolationStats(int N, int T) // perform T independent computational experiments on an N-by-N grid
+  public PercolationStats(int N, int T) 
+// perform T independent computational experiments on an N-by-N grid
   {
+    checkException(N,T);
     total_sites = N*N;
     trial_size = T;
     iterations = new double[T];
-    for(int i = 0; i < T; i++){ //perform T iterations
+    for (int i = 0; i < T; i++) { //perform T iterations
       Percolation perc = new Percolation(N); //initialize a percolation object
-      site_to_open = randomGenerate(total_sites); //reinitiate the random numbers
       count = 0; //initialize count
       while (!perc.percolates()) {
         //need to open some random site
-        int row = site_to_open[count] / (N) + 1;
-        int col = site_to_open[count] % (N-1) + 1;
-        perc.open(col,row);
-        count++; //increment count
+        //int row = site_to_open[count] / (N) + 1;
+        //int col = site_to_open[count] % (N-1) + 1;
+        int row = StdRandom.uniform(1,N+1);
+        int col = StdRandom.uniform(1,N+1);
+        if (!perc.isOpen(col,row)) {
+          count++; //increment count
+        }
+        perc.open(col, row);
       }
       iterations[i] = (double)count/(double)total_sites;
     }
     //System.out.println(Arrays.toString(iterations));
-  }
-  
-  private int[] randomGenerate(int total_sites){
-    int[] numbers = new int[total_sites];
-    for (int i = 0; i < total_sites; i++) {
-      numbers[i] = i; //initialize the array
-    }
-    StdRandom.shuffle(numbers);
-    return numbers;
   }
   
    public double mean()                     // sample mean of percolation threshold
@@ -72,6 +67,13 @@ public class PercolationStats {
      double stddev = stddev();
      return mean+(1.96*stddev/Math.sqrt((double)trial_size));
    }
+   
+   private void checkException(int N, int T){
+     if (N <= 0 | T <= 0) {
+       throw new java.lang.IllegalArgumentException("input needs to be positive values");
+     }
+   }
+   
    public static void main(String[] args)   // test client, described below
    {
      int N = Integer.parseInt(args[0]);
