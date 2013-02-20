@@ -10,7 +10,7 @@ public class Deque<Item> implements Iterable<Item>
   public Deque()
   {
   // construct an empty deque
-    deq = (Item[]) new Object [0];
+    deq = (Item[]) new Object [N];
   }
  public boolean isEmpty()
  {
@@ -51,6 +51,7 @@ public class Deque<Item> implements Iterable<Item>
  {
   // delete and return the item at the front
   if (size() < N/4) {resize(N/2,true);}
+  size = size();
   
   return deq[++first];
  }

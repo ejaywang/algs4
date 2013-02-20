@@ -1,3 +1,4 @@
+import java.util.Iterator;
 public class RandomizedQueue<Item> implements Iterable<Item> {
   private Item[] RQ;
   private int N = 0; //capacity of the current queue 
@@ -13,7 +14,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
    }
    public int size()                  // return the number of items on the queue
    {
-     return last - first
+     return last - first;
    }
    public void enqueue(Item item)     // add the item
    {
@@ -27,8 +28,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      //this will delete a random item and move the last item to the spot
      //check if last < N/4, if so, resize the queue to half the size
      if (last == N/4){resize(N/2);}
-     remove = StdRandom.uniform(last+1);
-     temp = RQ[remove];
+     int remove = StdRandom.uniform(last+1);
+     Item temp = RQ[remove];
      RQ[remove] = RQ[last--]; //replaces the removed item with last and decrement last.
      //if remove == last, then last will be "removed" simply because last decrements
      return temp;
@@ -36,20 +37,21 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
    }
    public Item sample()               // return (but do not delete) a random item
    {
-     select = StdRandom.uniform(last+1);
+     int select = StdRandom.uniform(last+1);
      return RQ[select];
    }
+   
    public Iterator<Item> iterator()   // return an independent iterator over items in random order
    {
      return new RQIterator();
    }
-    private class DeqIterator implements Iterator<Item>
+    private class RQIterator implements Iterator<Item>
     {
       private int i = last;
       
       public boolean hasNext() { return i>0;}
       public void remove() {/*not supported will throw an exception*/}
-      public Item next() {return deq[--i];}
+      public Item next() {return RQ[--i];}
     }
  
     private void resize(int capacity)

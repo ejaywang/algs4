@@ -28,7 +28,7 @@ public class Deque<Item> implements Iterable<Item>
   //first check how full the array is and if we need to resize it
    
    if (first == 0){resize(N*2,true);} //if the deque is full at the front
-   size = size();
+   int size = size();
    first = N; //resets the first pointer 
    deq[--first] = item; 
    size = size + 1;
@@ -40,7 +40,7 @@ public class Deque<Item> implements Iterable<Item>
  {
   // insert the item at the end
    if (last == N){resize(N*2,false);}
-   size = size();
+   int size = size();
    last = N; //resets the first pointer 
    deq[last++] = item; 
    size = size + 1;
@@ -51,7 +51,7 @@ public class Deque<Item> implements Iterable<Item>
  {
   // delete and return the item at the front
   if (size() < N/4) {resize(N/2,true);}
-  size = size();
+  int size = size();
   
   return deq[++first];
  }
