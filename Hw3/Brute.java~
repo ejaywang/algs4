@@ -1,0 +1,8 @@
+public class Brute {
+  
+   public static void main(String[] args)
+   {
+     //given an input file, check for any sets of 4 points that are collinear
+     System.out.println(args);
+   }
+}

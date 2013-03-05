@@ -1,0 +1,7 @@
+public class tester {
+  public static void main (String[] args){
+    double slope1 = Double.POSITIVE_INFINITY;
+    double slope2 = -10.0;
+  
+  }
+}

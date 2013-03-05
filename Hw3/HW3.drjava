@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<drjava version="drjava-20120818-r5686">
+  <project autorefresh="false" build="" main="Point" root="" work="">
+    <createjar file=""/>
+    <source>
+      <file active="true" name="tester.java" package="" timestamp="21-Feb-2013 17:00:30">
+        <select from="385" to="385"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Brute.java" package="" timestamp="21-Feb-2013 14:40:47">
+        <select from="385" to="385"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Fast.java" package="" timestamp="21-Feb-2013 15:48:05">
+        <select from="385" to="385"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Point.java" package="" timestamp="21-Feb-2013 16:17:26">
+        <select from="385" to="385"/>
+        <scroll column="0" row="0"/>
+      </file>
+    </source>
+    <included/>
+    <excluded/>
+    <collapsed/>
+    <classpath/>
+    <breakpoints/>
+    <watches/>
+    <bookmarks/>
+    <preferences/>
+  </project>
+</drjava>
