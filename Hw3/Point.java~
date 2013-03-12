@@ -1,6 +1,6 @@
 /*************************************************************************
- * Name:
- * Email:
+ * Name: Edward Wang
+ * Email: ejaywang@outlook.com
  *
  * Compilation:  javac Point.java
  * Execution:
@@ -11,6 +11,7 @@
  *************************************************************************/
 
 import java.util.Comparator;
+import java.util.Arrays;
 
 public class Point implements Comparable<Point> {
 
@@ -50,7 +51,7 @@ public class Point implements Comparable<Point> {
         else if (that.y < this.y) { return Double.NEGATIVE_INFINITY; }
         else { return 0.0; }
       }
-      return (that.y - this.y)/(that.x-this.x);
+      return ((double)that.y - (double)this.y)/((double)that.x-(double)this.x);
     }
 
     // is this point lexicographically smaller than that one?
@@ -62,6 +63,7 @@ public class Point implements Comparable<Point> {
       else if (this.y == that.y)
       {
         if (this.x < that.x) { return -1; }
+        if (this.x == that.x) {return 0; } 
       }
       return 1;
     }
@@ -84,7 +86,28 @@ public class Point implements Comparable<Point> {
       }
     }
     // unit test
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         /* YOUR CODE HERE */
+      Point p0 = new Point(0, 0);
+      Point[] set = new Point[10];
+      for (int i = 0; i < 10; i++)
+      {
+        int xPos = StdRandom.uniform(10) - 5;
+        int yPos = StdRandom.uniform(10) - 5;
+        Point p = new Point(xPos,yPos);
+        set[i] = p;
+        System.out.print (p.toString());
+      }
+      Arrays.sort(set,p0.SLOPE_ORDER);
+      Double[] slopes = new Double[10];
+      for (int i = 0; i < 10; i++)
+      {
+        slopes[i] = p0.slopeTo(set[i]);
+      }
+      
+      System.out.println("");
+      System.out.println(Arrays.deepToString(slopes));
     }
 }
+

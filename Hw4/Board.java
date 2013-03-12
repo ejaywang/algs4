@@ -42,8 +42,10 @@ public class Board {
         //find the expected i and j values given the board value
         if (board[i][j] != 0)
         {
-          int expi = board[i][j] / dimension();
+          int expi = (board[i][j]-1) / dimension();
           int expj = (board[i][j]-1) % dimension();
+          //System.out.println(Integer.toString(board[i][j]) + " / " + Integer.toString(dimension()) +  " = " + Integer.toString(expi));
+          //System.out.println(Integer.toString(board[i][j]) + "-1 % " + Integer.toString(dimension()) + " = " + Integer.toString(expj));
           num_out_of_place += Math.abs(i-expi) + Math.abs(j-expj);
         }
       }
@@ -136,19 +138,19 @@ public class Board {
     }
     if (empty[0] != dimension()-1) //not on the right edge
     {
-      swapPos(tempBoard,empty[0],empty[1],empty[0]+1,empty[1]); // swap the left with the empty
+      swapPos(tempBoard,empty[0],empty[1],empty[0]+1,empty[1]); // swap the right with the empty
       Board rightBoard = new Board(tempBoard);
       neighbor_boards.add(rightBoard);
       swapPos(tempBoard,empty[0]+1,empty[1],empty[0],empty[1]); // return to original
     }
     if (empty[1] != 0) //not on the top edge
     {
-      swapPos(tempBoard,empty[0],empty[1],empty[0],empty[1]-1); // swap the left with the empty
+      swapPos(tempBoard,empty[0],empty[1],empty[0],empty[1]-1); // swap the top with the empty
       Board topBoard = new Board(tempBoard);
       neighbor_boards.add(topBoard);
       swapPos(tempBoard,empty[0],empty[1]-1,empty[0],empty[1]); // return to original
     }
-    if (empty[0] != dimension()-1) //not on the bottom edge
+    if (empty[1] != dimension()-1) //not on the bottom edge
     {
       swapPos(tempBoard,empty[0],empty[1],empty[0],empty[1]+1); // swap the left with the empty
       Board bottomBoard = new Board(tempBoard);
@@ -161,9 +163,10 @@ public class Board {
   
     public String toString()               // string representation of the board (in the output format specified below)
   {
-    String output = "";
+    String output = Integer.toString(dimension());
     for (int i = 0; i < board.length; i++){
       for (int j = 0; j < board[0].length; j++){
+        if (j == 0) {output = output + "\n";}
         output = output + Integer.toString(board[i][j]);
       }
     }
@@ -174,18 +177,19 @@ public class Board {
   public static void main(String[] args)
   {
     int[][] arr0 = {{8, 1, 3},{4, 0, 2},{7,6,5}};
-    int[][] arr1 = {{1, 2, 3},{4, 5, 6},{7,8,0}};
+    int[][] arr1 = {{1, 2, 3, 4},{5, 6, 7, 8},{9, 10, 11, 12},{13, 14, 15, 0}};
     int[][] arr2 = {{8, 1, 3},{4, 0, 2},{7,6,5}};
     Board puzzle = new Board(arr0);
     Board puzzle2 = new Board(arr2);
-    Board twin = puzzle.twin();
+    //Board twin = puzzle.twin();
     //System.out.println(twin.toString());
-    //System.out.println(puzzle.equals(twin));
+    //System.out.println(puzzle.toString());
+    
     Iterable<Board> puzzle_neighbors = puzzle.neighbors();
     for (Board neighbors : puzzle_neighbors)
     {
       System.out.println(neighbors.toString());  
     }
-    
+   
   }
 }
