@@ -1,0 +1,111 @@
+import java.util.TreeSet;
+import java.util.ArrayList;
+import java.awt.Color;
+
+public class KdTree 
+{
+  
+  private Node root;
+  private int size;
+  private static final boolean VERT = true;
+  private static final boolean HORIZ = false;
+  public KdTree()                               // construct an empty set of points
+  {
+    this.size = 0;
+  }
+
+  public boolean isEmpty()
+  {
+    return size == 0;
+  }
+  
+  public int size()
+  {
+    return size;
+  }
+  
+  private static class Node 
+  {
+    private Point2D p;// the point
+    private RectHV rect; // the axis-aligned rectangle corresponding to this node
+    private Node lb; //the left/bottom subtree
+    private Node rt; //the right/top subtree
+    private boolean orientation; //VERT or HORIZ
+    
+    public Node(Point2D point, Node parent)
+    {
+      this.p = point;
+      this.orientation = parent.orientation();
+      parent.addChild(this);
+    }
+    
+    public void addChild (Node child)
+    {
+      if (this.orientation == VERT)
+      {
+        if (child.p.x() < this.p.x()) this.lb = child;
+        else this.rt = child;
+      }
+      else
+      {
+        if (child.p.y() < this.p.y()) this.lb = child;
+        else this.rt = child;
+      }
+    }
+    public boolean orientation()
+    {
+      return this.orientation;
+    }
+    
+  }
+  /*    
+  public void insert(Point2D p)                   // add the point p to the set (if it is not already in the set)
+  {
+    point_set.add(p);
+  }
+  public boolean contains(Point2D p)              // does the set contain the point p?
+  {
+    return point_set.contains(p);
+  }
+  public void draw()                              // draw all of the points to standard draw
+  {
+    for (Point2D point : point_set){point.draw();}
+  }
+  public Iterable<Point2D> range(RectHV rect)     // all points in the set that are inside the rectangle
+  {
+    ArrayList<Point2D> contained_points = new ArrayList<Point2D>();
+    for (Point2D point : point_set)
+    {
+     if (point.x() > rect.xmin() & point.x() < rect.xmax() & point.y() > rect.ymin() & point.y() < rect.ymax())
+     {
+       contained_points.add(point);
+     }
+    }
+    return contained_points;
+  }
+  public Point2D nearest(Point2D p)               // a nearest neighbor in the set to p; null if set is empty
+  {
+    Point2D nearest_point = point_set.first(); //initialize this with the first point
+    if (isEmpty()) return null;
+    else
+    {
+      for (Point2D point : point_set)
+      {
+        if (p.distanceTo(point) < p.distanceTo(nearest_point)) nearest_point = point;
+      }
+      return nearest_point;
+    }
+  }
+  */
+  public static void main(String[] args)
+  {
+    KdTree point_set = new KdTree();
+    /*
+    for (int i = 0; i < args.length; i = i + 2)
+    {
+      point_set.insert(new Point2D(Double.parseDouble(args[i]),Double.parseDouble(args[i+1])));
+    }
+    */
+    System.out.println(point_set.isEmpty());
+  }
+}
